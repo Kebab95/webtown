@@ -36,57 +36,82 @@ class kosar_model extends Model
         if ($array !=null){
             $termekekLista = $this->getKosarTermekek($array);
 
+            $kedvezmenyMegaPack = 0;
+            $kedvezmenyKettoHarom = 0;
+            foreach ($array as $key => $value) {
+                /** @var TermekekTable $termek */
+                $termek = $termekekLista[$key][0];
+                $darab = $array[$key][1];
+
+
+                if ($termek->isMegapack()){
+                    if ($darab>2){
+                        $kedvezmenyMegaPack +=intval($darab/12)*6000;
+                    }
+                }
+                else {
+                    if ($darab>2){
+                        $kedvezmenyKettoHarom +=intval($darab/3)*$termek->getPrice();
+                    }
+                }
+            }
             foreach ($array as $key => $value) {
                 /** @var TermekekTable $termek */
                 $termek = $termekekLista[$key][0];
                 $darab = $array[$key][1];
                 $kedvezmeny = 0;
+
+
                 if ($termek->isMegapack()){
                     if ($darab>2){
                         $kedvezmeny =intval($darab/12)*6000;
                     }
+                    if ($kedvezmenyMegaPack<$kedvezmenyKettoHarom){
+                        $temp[$key] = array(
+                            "Id" => $termek->getId(),
+                            "Nev" => $termek->getName(),
+                            "Darab" => $darab,
+                            "Ar" => ($termek->getPrice()*$darab),
+                            "Kedvezmeny" => 0
+                        );
+                    }
+                    else {
+                        $temp[$key] = array(
+                            "Id" => $termek->getId(),
+                            "Nev" => $termek->getName(),
+                            "Darab" => $darab,
+                            "Ar" => ($termek->getPrice()*$darab)-$kedvezmeny,
+                            "Kedvezmeny" => $kedvezmeny
+                        );
+                    }
+
                 }
                 else {
                     if ($darab>2){
                         $kedvezmeny =intval($darab/3)*$termek->getPrice();
                     }
-                }
-                $temp[$key] = array(
-                    "Id" => $termek->getId(),
-                    "Nev" => $termek->getName(),
-                    "Darab" => $darab,
-                    "Ar" => ($termek->getPrice()*$darab)-$kedvezmeny,
-                    "Kedvezmeny" => $kedvezmeny
-                );
-            }
-            /*
-            for ($i = 0;$i<count($array);$i++){
-                /** @var TermekekTable $termek *//*
-                $termek = $termekekLista[$i][0];
-                if (isset($array[$i])){
-                    $darab = $array[$i][1];
-                    $kedvezmeny = 0;
-                    if ($termek->isMegapack()){
-                        if ($darab>2){
-                            $kedvezmeny =intval($darab/12)*6000;
-                        }
+                    if ($kedvezmenyMegaPack<$kedvezmenyKettoHarom){
+                        $temp[$key] = array(
+                            "Id" => $termek->getId(),
+                            "Nev" => $termek->getName(),
+                            "Darab" => $darab,
+                            "Ar" => ($termek->getPrice()*$darab)-$kedvezmeny,
+                            "Kedvezmeny" => $kedvezmeny
+                        );
                     }
                     else {
-                        if ($darab>2){
-                            $kedvezmeny =intval($darab/3)*$termek->getPrice();
-                        }
+                        $temp[$key] = array(
+                            "Id" => $termek->getId(),
+                            "Nev" => $termek->getName(),
+                            "Darab" => $darab,
+                            "Ar" => ($termek->getPrice()*$darab),
+                            "Kedvezmeny" => 0
+                        );
                     }
 
-                    array_push($temp,array(
-                        "Id" => $termek->getId(),
-                        "Nev" => $termek->getName(),
-                        "Darab" => $darab,
-                        "Ar" => ($termek->getPrice()*$darab)-$kedvezmeny,
-                        "Kedvezmeny" => $kedvezmeny
-                    ));
                 }
+
             }
-            */
         }
         return $temp;
     }
@@ -121,9 +146,44 @@ class kosar_model extends Model
         }
         else{
             echo "<tr>
-                                <td colspan='5'>Nincsen termék a kosarában</td>
+                                <td colspan='5' class='text-center'>Nincsen termék a kosarában</td>
                                 </tr>";
         }
 
+    }
+
+    public function veglegesites(string $name, array $termekek)
+    {
+        $kosarData = $this->getKosarTableData($termekek);
+
+        $insert = "";
+        foreach ($kosarData as $value) {
+            if (strlen($insert)>0){
+                $insert.=",";
+            }
+            $insert .="('".$name."',".$value["Id"].",".$value["Darab"].",".$value["Ar"].")";
+        }
+
+        $sql = "INSERT INTO ".RendelesekTable::$tableName." (
+                ".RendelesekTable::$name.",
+                ".RendelesekTable::$termek.",
+                ".RendelesekTable::$datab.",
+                ".RendelesekTable::$ar."
+        ) VALUES ".$insert;
+        try{
+
+            $sth = $this->db->prepare($sql);
+            $return = $sth->execute();
+            if ($return){
+                Session::destroy();
+                return $return;
+            }
+            else {
+                return $return;
+            }
+            return $sth->execute();
+        } catch (PDOException $e){
+            return false;
+        }
     }
 }

@@ -2,15 +2,56 @@
  * Created by kebab on 2017.05.09..
  */
 $(document).ready(function () {
-    $("button#termekTorles").on("click",function () {
-        var key = $(this).attr("rel");
-        $.get(getURL()+"kosar/deleteTermek/"+key,function (data) {
-            $("#kosarTBody").html(data);
-            rederOsszAr();
-        });
+    $("input#megrendel").on("click",function () {
+        var name = $("input#name").val();
+        if (name.length<1){
+            alert("Nem töltötte ki a nevet!");
+        }
+        else {
+            var termekekID = $("input#termekID");
+            var termekekDB = $("td#termekDB");
+            if (termekekID.length <1 || termekekDB.length <1){
+                alert("Nincsen temék a kosárban!");
+            }
+            else {
+                var termekekIDVal = [];
+                var termekekDBVal = [];
+                termekekID.contents().prevObject.each(function (key, data) {
+                    termekekIDVal[key] = parseInt(termekekID.contents().prevObject[key].value);
+                });
+
+                termekekDB.contents().each(function (key, data) {
+                    termekekDBVal[key] = parseInt(termekekDB.contents()[key].data);
+                });
+                console.log(termekekIDVal);
+                console.log(termekekDBVal);
+                var ossz = {1:"asd"};
+                termekekIDVal.forEach(function (key, data) {
+                    ossz[key] = [termekekIDVal[data],termekekDBVal[data]];
+                });
+                $.post(getURL()+"kosar/veglegesites/"+name,{rendeles:JSON.stringify(ossz)},function (data) {
+                    if (data.toLowerCase() === "true".toLowerCase() ){
+                        location.reload();
+                    }
+                    else {
+                        alert("Hiba!");
+                    }
+                });
+            }
+        }
+
+    });
+    rederOsszAr();
+});
+$(document).on("click","button#termekTorles",function () {
+    var key = $(this).attr("rel");
+    $.get(getURL()+"kosar/deleteTermek/"+key,function (data) {
+        $("#kosarTBody").html(data);
+        //console.log("asd");
+        rederOsszAr();
     });
 
-    rederOsszAr();
+
 });
 function rederOsszAr() {
     var arArray = $("td#ar");

@@ -24,6 +24,34 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/ `webtown` /*!40100 DEFAULT CHARACTER SE
 USE `webtown`;
 
 --
+-- Table structure for table `rendelesek`
+--
+
+DROP TABLE IF EXISTS `rendelesek`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rendelesek` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` char(255) NOT NULL,
+  `termekID` int(11) NOT NULL,
+  `darab` int(11) NOT NULL,
+  `ar` int(11) NOT NULL,
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rendelesek`
+--
+
+LOCK TABLES `rendelesek` WRITE;
+/*!40000 ALTER TABLE `rendelesek` DISABLE KEYS */;
+INSERT INTO `rendelesek` VALUES (1,'asd',1,10,20000,'2017-05-10 20:49:34'),(2,'asd',2,4,12000,'2017-05-10 20:49:34'),(3,'asd',3,1,2800,'2017-05-10 20:49:34'),(4,'asd',4,30,18000,'2017-05-10 20:49:34'),(5,'qweqwe',1,10,20000,'2017-05-10 20:53:06'),(6,'qweqwe',2,4,12000,'2017-05-10 20:53:06'),(7,'qweqwe',3,1,2800,'2017-05-10 20:53:06'),(8,'qweqwe',4,30,18000,'2017-05-10 20:53:06'),(9,'valami',1,1,2000,'2017-05-10 20:54:51'),(10,'valami',2,1,3000,'2017-05-10 20:54:51'),(11,'valami',3,1,2800,'2017-05-10 20:54:51'),(12,'valami',4,1,1000,'2017-05-10 20:54:51'),(13,'ergtergdf',1,1,2000,'2017-05-10 20:55:46'),(14,'ergtergdf',2,1,3000,'2017-05-10 20:55:46'),(15,'ergtergdf',3,1,2800,'2017-05-10 20:55:46'),(16,'ergtergdf',4,1,1000,'2017-05-10 20:55:46'),(17,'rebrebrb',1,1,2000,'2017-05-10 20:56:24'),(18,'rebrebrb',2,1,3000,'2017-05-10 20:56:24'),(19,'rebrebrb',3,1,2800,'2017-05-10 20:56:24'),(20,'rebrebrb',4,1,1000,'2017-05-10 20:56:24');
+/*!40000 ALTER TABLE `rendelesek` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `termekek`
 --
 
@@ -48,7 +76,7 @@ CREATE TABLE `termekek` (
 
 LOCK TABLES `termekek` WRITE;
 /*!40000 ALTER TABLE `termekek` DISABLE KEYS */;
-INSERT INTO `termekek` VALUES (1,'Téliszalámi',2000,0,'2017-05-08 14:04:43','2017-05-08 14:04:43',0),(2,'Gumikacsa',3000,0,'2017-05-08 14:04:43','2017-05-08 14:04:43',0),(3,'Uborka',2800,1,'2017-05-08 14:04:43','2017-05-08 14:04:43',0),(4,'Gesztenye',1000,1,'2017-05-08 14:04:43','2017-05-08 14:04:43',0);
+
 /*!40000 ALTER TABLE `termekek` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -61,4 +89,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-05-08 16:53:46
+-- Dump completed on 2017-05-11  0:22:44

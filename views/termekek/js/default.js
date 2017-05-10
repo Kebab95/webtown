@@ -26,7 +26,7 @@ $(document).on("click","#submitKosar",function () {
     var darab = $("#mennyiseg").val();
 
     $.post(getURL()+"termekek/addKosar/"+id+"/"+darab,function (data) {
-        alert(data);
+        $("#myModal").modal("toggle");
     });
 });
 function renderPrice() {
