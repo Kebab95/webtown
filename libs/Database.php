@@ -27,7 +27,7 @@ class Database extends PDO
         )
     {
         $col = "";
-        if (count($columns) == 0) {
+        if (count($columns) == 0 || $columns==null) {
             $col .= "*";
         } else {
             foreach ($columns as $column) {

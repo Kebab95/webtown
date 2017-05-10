@@ -6,14 +6,15 @@
  * Date: 2017.05.08.
  * Time: 12:23
  */
-class ListPage extends Controller
+class termekek extends Controller
 {
     /**
-     * listpage constructor.
+     * termekek constructor.
      */
     public function __construct()
     {
         parent::__construct();
+        $this->view->addJSFile("termekek/js/default.js");
     }
 
 
@@ -25,6 +26,14 @@ class ListPage extends Controller
     public function index()
     {
         $this->view->termekekList = $this->model->getTermekek();
-        $this->view->render("listpage/index");
+        $this->view->render("termekek/index");
+    }
+    public function getModal($id){
+        $this->model->getModal($id);
+    }
+
+    public function addKosar($id, $db)
+    {
+        $this->model->addKosar($id,$db);
     }
 }

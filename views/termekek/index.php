@@ -3,7 +3,8 @@
         <tr>
             <th>Név</th>
             <th>Ár</th>
-            <th>Megapack</th>
+            <th>Megapack Kedvezmény</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -14,8 +15,12 @@
                     echo "<td>".$value->getName()."</td>";
                     echo "<td>".$value->getPrice()." Ft</td>";
                     echo "<td>".($value->isMegapack()?"Igen":"Nem")."</td>";
+                    echo "<td><button class='btn btn-block btn-default' id='add' rel='".$value->getId()."'>Kosárhoz ad</button> </td>";
                 echo "</tr>";
             }
         ?>
     </tbody>
 </table>
+<div id="modalHire"></div>
+
+<?php

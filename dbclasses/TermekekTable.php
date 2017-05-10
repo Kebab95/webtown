@@ -9,6 +9,9 @@
 class TermekekTable extends TableClass
 {
 
+    static $tableName = "termekek";
+
+
     static $id = "id";
     static $name = "name";
     static $price = "price";
