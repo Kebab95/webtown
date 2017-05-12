@@ -55,6 +55,11 @@ class kosar_model extends Model
                     }
                 }
             }
+            /**
+             * 0 = 2-t fizet hármat vihet
+             * 1 = Megapack kedvezmény
+             */
+            $kedvezmenyTipus = 0;
             foreach ($array as $key => $value) {
                 /** @var TermekekTable $termek */
                 $termek = $termekekLista[$key][0];
@@ -67,6 +72,7 @@ class kosar_model extends Model
                         $kedvezmeny =intval($darab/12)*6000;
                     }
                     if ($kedvezmenyMegaPack<$kedvezmenyKettoHarom){
+                        $kedvezmenyTipus = 0;
                         $temp[$key] = array(
                             "Id" => $termek->getId(),
                             "Nev" => $termek->getName(),
@@ -76,6 +82,7 @@ class kosar_model extends Model
                         );
                     }
                     else {
+                        $kedvezmenyTipus = 1;
                         $temp[$key] = array(
                             "Id" => $termek->getId(),
                             "Nev" => $termek->getName(),
@@ -91,6 +98,7 @@ class kosar_model extends Model
                         $kedvezmeny =intval($darab/3)*$termek->getPrice();
                     }
                     if ($kedvezmenyMegaPack<$kedvezmenyKettoHarom){
+                        $kedvezmenyTipus = 0;
                         $temp[$key] = array(
                             "Id" => $termek->getId(),
                             "Nev" => $termek->getName(),
@@ -100,6 +108,7 @@ class kosar_model extends Model
                         );
                     }
                     else {
+                        $kedvezmenyTipus = 1;
                         $temp[$key] = array(
                             "Id" => $termek->getId(),
                             "Nev" => $termek->getName(),
@@ -112,6 +121,7 @@ class kosar_model extends Model
                 }
 
             }
+            $temp["KedvezmenyTipus"] = $kedvezmenyTipus;
         }
         return $temp;
     }
@@ -135,13 +145,18 @@ class kosar_model extends Model
 
         if ($array !=null && is_array($array)){
             foreach ($array as $key => $value) {
-                echo "<tr>";
-                echo "<td>".$value["Nev"]."</td>";
-                echo "<td>".$value["Darab"]."</td>";
-                echo "<td id='ar'>".$value["Ar"]." Ft</td>";
-                echo "<td><i>".$value["Kedvezmeny"]." Ft</i></td>";
-                echo "<td><button rel='".$key."' id='termekTorles' class='btn btn-danger'>&times;</button> </td>";
-                echo "</tr>";
+                if (isset($value["Id"])){
+                    echo "<tr>";
+                    echo "<td>
+                                        <input type='hidden' id='kedvezmenyTipus' value='".$array["KedvezmenyTipus"]."'>
+                                        <input type='hidden' id='termekID' value='".$value["Id"]."'>".$value["Nev"]."</td>";
+                    echo "<td id='termekDB'>".$value["Darab"]."</td>";
+                    echo "<td id='ar'>".$value["Ar"]." Ft</td>";
+                    echo "<td><i id='kedvezmeny'>".$value["Kedvezmeny"]." Ft</i></td>";
+                    echo "<td><button rel='".$key."' id='termekTorles' class='btn btn-danger'>&times;</button> </td>";
+                    echo "</tr>";
+                }
+
             }
         }
         else{

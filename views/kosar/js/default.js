@@ -64,10 +64,31 @@ $(document).on("click","button#termekTorles",function () {
 });
 function rederOsszAr() {
     var arArray = $("td#ar");
-    console.log(arArray.contents());
+    var kedvezmenyArArray = $("i#kedvezmeny");
+
     var osszAr = 0;
     arArray.contents().each(function (key,data) {
         osszAr+= parseInt(arArray[key].textContent);
     });
-    $("#osszAr").html(osszAr+" Ft");
+
+    $("#kedvezmenyesAr").html(osszAr+" Ft");
+
+    kedvezmenyArArray.contents().each(function (key,data) {
+        osszAr+= parseInt(kedvezmenyArArray[key].textContent);
+    });
+
+    $("#teljesAr").html(osszAr+" Ft");
+
+    var szoveg = "";
+    switch ($("#kedvezmenyTipus").val()){
+        case "0":
+            szoveg="Kettőt fizet hármat kap kedvezmény";
+            break;
+        case "1":
+            szoveg="Megapack kedvezmény";
+            break;
+        default:
+            szoveg="Nem létező kedvezmény";
+    }
+    $("#kedvTipus").html(szoveg);
 }

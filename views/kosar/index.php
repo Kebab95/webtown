@@ -19,13 +19,18 @@
                     $array = $this->kosarArray;
                         if ($array !=null && is_array($array)){
                             foreach ($array as $key => $value) {
-                                echo "<tr>";
-                                    echo "<td><input type='hidden' id='termekID' value='".$value["Id"]."'>".$value["Nev"]."</td>";
+                                if (isset($value["Id"])){
+                                    echo "<tr>";
+                                    echo "<td>
+                                        <input type='hidden' id='kedvezmenyTipus' value='".$array["KedvezmenyTipus"]."'>
+                                        <input type='hidden' id='termekID' value='".$value["Id"]."'>".$value["Nev"]."</td>";
                                     echo "<td id='termekDB'>".$value["Darab"]."</td>";
                                     echo "<td id='ar'>".$value["Ar"]." Ft</td>";
-                                    echo "<td><i>".$value["Kedvezmeny"]." Ft</i></td>";
+                                    echo "<td><i id='kedvezmeny'>".$value["Kedvezmeny"]." Ft</i></td>";
                                     echo "<td><button rel='".$key."' id='termekTorles' class='btn btn-danger'>&times;</button> </td>";
-                                echo "</tr>";
+                                    echo "</tr>";
+                                }
+
                             }
                         }
                         else{
@@ -72,18 +77,34 @@
     <div class="col-sm-4"></div>
 </div>
 <div class="row form-group">
-    <div class="col-sm-4"></div>
-    <div class="col-sm-4">
-        <div class="row">
-            <div class="col-sm-6">
-                Össz Fizetendő ár:
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8">
+        <div class="row form-group">
+            <div class="col-sm-6 text-right">
+                Teljes ár:
             </div>
-            <div class="col-sm-6" id="osszAr">
+            <div class="col-sm-6" id="teljesAr">
+
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-sm-6 text-right">
+                Kedvezménytípus:
+            </div>
+            <div class="col-sm-6" id="kedvTipus">
+
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-sm-6 text-right">
+                Kedvezményes Fizetendő ár:
+            </div>
+            <div class="col-sm-6" id="kedvezmenyesAr">
 
             </div>
         </div>
     </div>
-    <div class="col-sm-4"></div>
+    <div class="col-sm-2"></div>
 </div>
 <div class="row form-group">
     <div class="col-sm-4"></div>
