@@ -170,13 +170,16 @@ class kosar_model extends Model
     public function veglegesites(string $name,$email,$cim, array $termekek)
     {
         $kosarData = $this->getKosarTableData($termekek);
-
+        //print_r($kosarData);
         $insert = "";
-        foreach ($kosarData as $value) {
-            if (strlen($insert)>0){
-                $insert.=",";
+        foreach ($kosarData as $key => $value) {
+            if ($key !="KedvezmenyTipus"){
+                if (strlen($insert)>0){
+                    $insert.=",";
+                }
+                $insert .="('".$name."','".$email."','".$cim."',".$value["Id"].",".$value["Darab"].",".$value["Ar"].")";
             }
-            $insert .="('".$name."','".$email."','".$cim."',".$value["Id"].",".$value["Darab"].",".$value["Ar"].")";
+
         }
 
         $sql = "INSERT INTO ".RendelesekTable::$tableName." (

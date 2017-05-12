@@ -31,6 +31,7 @@ $(document).ready(function () {
                 termekekIDVal.forEach(function (key, data) {
                     ossz[key] = [termekekIDVal[data],termekekDBVal[data]];
                 });
+                console.log(ossz);
                 $.post(getURL()+"kosar/veglegesites/",
                     {
                         rendeles:JSON.stringify(ossz),
