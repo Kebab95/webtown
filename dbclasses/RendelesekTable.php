@@ -12,6 +12,8 @@ class RendelesekTable extends TableClass
 
     static $id = "id";
     static $name = "name";
+    static $email = "email";
+    static $cim = "kiszalitasi_cim";
     static $termek = "termekID";
     static $datab ="darab";
     static $ar = "ar";

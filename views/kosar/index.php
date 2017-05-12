@@ -44,12 +44,28 @@
 <div class="row form-group">
     <div class="col-sm-4"></div>
     <div class="col-sm-4">
-        <div class="row">
+        <div class="row form-group">
             <div class="col-sm-6">
                 Vásárló neve
             </div>
             <div class="col-sm-6">
                 <input type="text" id="name" class="form-control">
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-sm-6">
+                Email címe
+            </div>
+            <div class="col-sm-6">
+                <input type="text" id="email" class="form-control">
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-sm-6">
+                Kiszálítás címe
+            </div>
+            <div class="col-sm-6">
+                <input type="text" id="cim" class="form-control">
             </div>
         </div>
     </div>

@@ -4,8 +4,10 @@
 $(document).ready(function () {
     $("input#megrendel").on("click",function () {
         var name = $("input#name").val();
-        if (name.length<1){
-            alert("Nem töltötte ki a nevet!");
+        var email = $("input#email").val();
+        var cim = $("input#cim").val();
+        if (name.length<1 && email.length<1 && cim.length<1){
+            alert("Nem töltött ki minden szükséges mezőt a rendeléshez!");
         }
         else {
             var termekekID = $("input#termekID");
@@ -29,11 +31,18 @@ $(document).ready(function () {
                 termekekIDVal.forEach(function (key, data) {
                     ossz[key] = [termekekIDVal[data],termekekDBVal[data]];
                 });
-                $.post(getURL()+"kosar/veglegesites/"+name,{rendeles:JSON.stringify(ossz)},function (data) {
+                $.post(getURL()+"kosar/veglegesites/",
+                    {
+                        rendeles:JSON.stringify(ossz),
+                        name: name,
+                        email:email,
+                        cim:cim
+                    },function (data) {
                     if (data.toLowerCase() === "true".toLowerCase() ){
                         location.reload();
                     }
                     else {
+                        console.log(data);
                         alert("Hiba!");
                     }
                 });

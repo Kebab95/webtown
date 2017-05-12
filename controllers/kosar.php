@@ -32,11 +32,11 @@ class kosar extends Controller
         $this->view->render("kosar/index");
     }
 
-    public function veglegesites($name)
+    public function veglegesites()
     {
-        if (isset($_POST["rendeles"]) && strlen($name) !=0) {
+        if (isset($_POST["rendeles"]) && strlen($_POST["name"]) !=0) {
             $rendeles = json_decode($_POST["rendeles"],true);
-            $vissza = $this->model->veglegesites($name,$rendeles);
+            $vissza = $this->model->veglegesites($_POST["name"],$_POST["email"],$_POST["cim"],$rendeles);
             echo $vissza?"true":"false";
         }
 

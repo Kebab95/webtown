@@ -152,7 +152,7 @@ class kosar_model extends Model
 
     }
 
-    public function veglegesites(string $name, array $termekek)
+    public function veglegesites(string $name,$email,$cim, array $termekek)
     {
         $kosarData = $this->getKosarTableData($termekek);
 
@@ -161,15 +161,18 @@ class kosar_model extends Model
             if (strlen($insert)>0){
                 $insert.=",";
             }
-            $insert .="('".$name."',".$value["Id"].",".$value["Darab"].",".$value["Ar"].")";
+            $insert .="('".$name."','".$email."','".$cim."',".$value["Id"].",".$value["Darab"].",".$value["Ar"].")";
         }
 
         $sql = "INSERT INTO ".RendelesekTable::$tableName." (
                 ".RendelesekTable::$name.",
+                ".RendelesekTable::$email.",
+                ".RendelesekTable::$cim.",
                 ".RendelesekTable::$termek.",
                 ".RendelesekTable::$datab.",
                 ".RendelesekTable::$ar."
         ) VALUES ".$insert;
+        //echo $sql;
         try{
 
             $sth = $this->db->prepare($sql);
@@ -181,7 +184,7 @@ class kosar_model extends Model
             else {
                 return $return;
             }
-            return $sth->execute();
+            //return $sth->execute();
         } catch (PDOException $e){
             return false;
         }
