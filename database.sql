@@ -26,7 +26,7 @@ CREATE TABLE `termekek` (
   `last_change_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `delete` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -56,7 +56,7 @@ CREATE TABLE `rendelesek` (
   PRIMARY KEY (`id`),
   KEY `rendelesek_termekek_id_fk` (`termekID`),
   CONSTRAINT `rendelesek_termekek_id_fk` FOREIGN KEY (`termekID`) REFERENCES `termekek` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 
